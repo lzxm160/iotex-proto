@@ -69,7 +69,7 @@ service APIService {
   rpc GetLogs(GetLogsRequest) returns (GetLogsResponse) {}
 
   // GetVotes get a single address' votes
-  rpc GetVotes(GetVotesRequest) returns (BucketResponse) {}
+  rpc GetVotes(GetVotesRequest) returns (GetVotesResponse) {}
 
   /*
    * below are streaming APIs
