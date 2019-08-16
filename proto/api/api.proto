@@ -8,8 +8,10 @@
 //      protoc -I. -I ./../types --go_out=plugins=grpc:$GOPATH/src *.proto
 syntax = "proto3";
 package iotexapi;
+
 option go_package = "github.com/iotexproject/iotex-proto/golang/iotexapi";
 
+import "google/api/annotations.proto";
 import "proto/types/action.proto";
 import "proto/types/blockchain.proto";
 import "proto/types/node.proto";
@@ -25,7 +27,12 @@ service APIService {
   // 3. address with start index and action count
   // 4. get unconfirmed actions by address with start index and action count
   // 5. block hash with start index and action count
-  rpc GetActions(GetActionsRequest) returns (GetActionsResponse) {}
+  rpc GetActions(GetActionsRequest) returns (GetActionsResponse) {
+    option (google.api.http) = {
+      post: "/v1/getActions"
+      body: "*"
+    };
+  }
 
   // get block metadata(s) by:
   // 1. start index and block count
@@ -76,10 +83,20 @@ service APIService {
    */
 
   // get block info in stream
-  rpc StreamBlocks(StreamBlocksRequest) returns (stream StreamBlocksResponse) {}
+  rpc StreamBlocks(StreamBlocksRequest) returns (stream StreamBlocksResponse) {
+    option (google.api.http) = {
+      post: "/v1/streamBlocks"
+      body: "*"
+    };
+  }
 
   // get logs filtered by contract address and topics in stream
-  rpc StreamLogs(StreamLogsRequest) returns (stream StreamLogsResponse) {}
+  rpc StreamLogs(StreamLogsRequest) returns (stream StreamLogsResponse) {
+    option (google.api.http) = {
+      post: "/v1/streamLogs"
+      body: "*"
+    };
+  }
 }
 
 message GetVotesRequest {
