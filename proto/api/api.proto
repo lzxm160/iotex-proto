@@ -30,7 +30,7 @@ service APIService {
   rpc GetActions(GetActionsRequest) returns (GetActionsResponse) {
     option (google.api.http) = {
       post: "/v1/getActions"
-      body: "*"
+//      body: "*"
       additional_bindings {
 				get: "/v1/getActions/byIndex/{byIndex.start}/{byIndex.count}"
 			}
