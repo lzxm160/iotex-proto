@@ -32,7 +32,7 @@ service APIService {
       post: "/v1/getActions"
 //      body: "*"
       additional_bindings {
-				get: "/v1/getActions/{byIndex.start}"
+				get: "/v1/getActions/byIndex/{byIndex.start}"
 			}
     };
   }
