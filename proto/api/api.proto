@@ -32,7 +32,8 @@ service APIService {
       post: "/v1/getActions"
       body: "*"
       additional_bindings {
-				post: "/v1/getActions/byIndex/{byIndex.start}/{count}"
+				post: "/v1/getActions/byIndex/{byIndex.start}/{byIndex.count}"
+				body: "*"
 			}
     };
   }
