@@ -23,7 +23,9 @@ gogen:
 #	@protoc -I. -I./proto/types --go_out=plugins=grpc:${GOPATH}/src ./proto/api/*
 #	@protoc -I. --grpc-gateway_out=logtostderr=true:${GOPATH}/src ./proto/api/*
 	@protoc -I/usr/local/include -I. -I${GOPATH}/src -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --go_out=plugins=grpc:${GOPATH}/src ./proto/types/*
+
   	@protoc -I/usr/local/include -I. -I${GOPATH}/src -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --go_out=plugins=grpc:${GOPATH}/src ./proto/rpc/*
+
     @protoc -I/usr/local/include -I. -I${GOPATH}/src -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --go_out=plugins=grpc:${GOPATH}/src ./proto/testing/*
 	@protoc -I/usr/local/include -I. -I./proto/types -I${GOPATH}/src -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --go_out=plugins=grpc:${GOPATH}/src ./proto/api/*
     @protoc -I/usr/local/include -I. -I${GOPATH}/src -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --grpc-gateway_out=logtostderr=true:${GOPATH}/src ./proto/api/*
