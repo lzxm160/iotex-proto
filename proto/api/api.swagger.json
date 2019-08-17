@@ -1,0 +1,1514 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/api/api.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/getActions": {
+      "post": {
+        "summary": "get action(s) by:\n1. start index and action count\n2. action hash\n3. address with start index and action count\n4. get unconfirmed actions by address with start index and action count\n5. block hash with start index and action count",
+        "operationId": "GetActions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/iotexapiGetActionsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iotexapiGetActionsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "APIService"
+        ]
+      }
+    },
+    "/v1/getActions/byIndex/{byIndex.start}/{byIndex.count}": {
+      "get": {
+        "summary": "get action(s) by:\n1. start index and action count\n2. action hash\n3. address with start index and action count\n4. get unconfirmed actions by address with start index and action count\n5. block hash with start index and action count",
+        "operationId": "GetActions2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/iotexapiGetActionsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "byIndex.start",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "byIndex.count",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "byHash.actionHash",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "byHash.checkPending",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
+          },
+          {
+            "name": "byAddr.address",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "byAddr.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "byAddr.count",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "unconfirmedByAddr.address",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unconfirmedByAddr.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "unconfirmedByAddr.count",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "byBlk.blkHash",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "byBlk.start",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "byBlk.count",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "APIService"
+        ]
+      }
+    },
+    "/v1/streamBlocks": {
+      "post": {
+        "summary": "get block info in stream",
+        "operationId": "StreamBlocks",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "$ref": "#/x-stream-definitions/iotexapiStreamBlocksResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iotexapiStreamBlocksRequest"
+            }
+          }
+        ],
+        "tags": [
+          "APIService"
+        ]
+      }
+    },
+    "/v1/streamLogs": {
+      "post": {
+        "summary": "get logs filtered by contract address and topics in stream",
+        "operationId": "StreamLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "$ref": "#/x-stream-definitions/iotexapiStreamLogsResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iotexapiStreamLogsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "APIService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "iotexapiActionInfo": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "$ref": "#/definitions/iotextypesAction"
+        },
+        "actHash": {
+          "type": "string"
+        },
+        "blkHash": {
+          "type": "string"
+        },
+        "blkHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "sender": {
+          "type": "string"
+        },
+        "gasFee": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "iotexapiBlockInfo": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "$ref": "#/definitions/iotextypesBlock"
+        },
+        "receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesReceipt"
+          }
+        }
+      }
+    },
+    "iotexapiBlockProducerInfo": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "production": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiBucket": {
+      "type": "object",
+      "properties": {
+        "voter": {
+          "type": "string",
+          "title": "hex string"
+        },
+        "votes": {
+          "type": "string"
+        },
+        "weightedVotes": {
+          "type": "string"
+        },
+        "remainingDuration": {
+          "type": "string",
+          "title": "human readable duration"
+        }
+      }
+    },
+    "iotexapiEstimateActionGasConsumptionResponse": {
+      "type": "object",
+      "properties": {
+        "gas": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiEstimateGasForActionResponse": {
+      "type": "object",
+      "properties": {
+        "gas": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetAccountResponse": {
+      "type": "object",
+      "properties": {
+        "accountMeta": {
+          "$ref": "#/definitions/iotextypesAccountMeta"
+        }
+      }
+    },
+    "iotexapiGetActionByHashRequest": {
+      "type": "object",
+      "properties": {
+        "actionHash": {
+          "type": "string"
+        },
+        "checkPending": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
+    "iotexapiGetActionsByAddressRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "count": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetActionsByBlockRequest": {
+      "type": "object",
+      "properties": {
+        "blkHash": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "count": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetActionsByIndexRequest": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "count": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetActionsRequest": {
+      "type": "object",
+      "properties": {
+        "byIndex": {
+          "$ref": "#/definitions/iotexapiGetActionsByIndexRequest"
+        },
+        "byHash": {
+          "$ref": "#/definitions/iotexapiGetActionByHashRequest"
+        },
+        "byAddr": {
+          "$ref": "#/definitions/iotexapiGetActionsByAddressRequest"
+        },
+        "unconfirmedByAddr": {
+          "$ref": "#/definitions/iotexapiGetUnconfirmedActionsByAddressRequest"
+        },
+        "byBlk": {
+          "$ref": "#/definitions/iotexapiGetActionsByBlockRequest"
+        }
+      }
+    },
+    "iotexapiGetActionsResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "actionInfo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotexapiActionInfo"
+          }
+        }
+      }
+    },
+    "iotexapiGetBlockMetaByHashRequest": {
+      "type": "object",
+      "properties": {
+        "blkHash": {
+          "type": "string"
+        }
+      }
+    },
+    "iotexapiGetBlockMetasByIndexRequest": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "count": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetBlockMetasResponse": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "blkMetas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesBlockMeta"
+          }
+        }
+      }
+    },
+    "iotexapiGetChainMetaResponse": {
+      "type": "object",
+      "properties": {
+        "chainMeta": {
+          "$ref": "#/definitions/iotextypesChainMeta"
+        }
+      }
+    },
+    "iotexapiGetEpochMetaResponse": {
+      "type": "object",
+      "properties": {
+        "epochData": {
+          "$ref": "#/definitions/iotextypesEpochData"
+        },
+        "totalBlocks": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "blockProducersInfo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotexapiBlockProducerInfo"
+          }
+        }
+      }
+    },
+    "iotexapiGetLogsByBlock": {
+      "type": "object",
+      "properties": {
+        "blockHash": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotexapiGetLogsByRange": {
+      "type": "object",
+      "properties": {
+        "fromBlock": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "count": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetLogsResponse": {
+      "type": "object",
+      "properties": {
+        "logs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesLog"
+          }
+        }
+      }
+    },
+    "iotexapiGetRawBlocksResponse": {
+      "type": "object",
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotexapiBlockInfo"
+          }
+        }
+      }
+    },
+    "iotexapiGetReceiptByActionResponse": {
+      "type": "object",
+      "properties": {
+        "receiptInfo": {
+          "$ref": "#/definitions/iotexapiReceiptInfo"
+        }
+      }
+    },
+    "iotexapiGetServerMetaResponse": {
+      "type": "object",
+      "properties": {
+        "serverMeta": {
+          "$ref": "#/definitions/iotextypesServerMeta"
+        }
+      }
+    },
+    "iotexapiGetUnconfirmedActionsByAddressRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "count": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiGetVotesResponse": {
+      "type": "object",
+      "properties": {
+        "buckets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotexapiBucket"
+          }
+        }
+      }
+    },
+    "iotexapiLogsFilter": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotexapiTopics"
+          }
+        }
+      }
+    },
+    "iotexapiReadContractResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "receipt": {
+          "$ref": "#/definitions/iotextypesReceipt"
+        }
+      }
+    },
+    "iotexapiReadStateResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotexapiReceiptInfo": {
+      "type": "object",
+      "properties": {
+        "receipt": {
+          "$ref": "#/definitions/iotextypesReceipt"
+        },
+        "blkHash": {
+          "type": "string"
+        }
+      }
+    },
+    "iotexapiSendActionResponse": {
+      "type": "object",
+      "properties": {
+        "actionHash": {
+          "type": "string"
+        }
+      }
+    },
+    "iotexapiStreamBlocksRequest": {
+      "type": "object",
+      "title": "below are streaming APIs"
+    },
+    "iotexapiStreamBlocksResponse": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "$ref": "#/definitions/iotexapiBlockInfo"
+        }
+      }
+    },
+    "iotexapiStreamLogsRequest": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "$ref": "#/definitions/iotexapiLogsFilter"
+        }
+      }
+    },
+    "iotexapiStreamLogsResponse": {
+      "type": "object",
+      "properties": {
+        "log": {
+          "$ref": "#/definitions/iotextypesLog"
+        }
+      }
+    },
+    "iotexapiSuggestGasPriceResponse": {
+      "type": "object",
+      "properties": {
+        "gasPrice": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotexapiTopics": {
+      "type": "object",
+      "properties": {
+        "topic": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      }
+    },
+    "iotextypesAccountMeta": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "pendingNonce": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "numActions": {
+          "type": "string",
+          "format": "uint64"
+        }
+      },
+      "title": "Account Metadata"
+    },
+    "iotextypesAction": {
+      "type": "object",
+      "properties": {
+        "core": {
+          "$ref": "#/definitions/iotextypesActionCore"
+        },
+        "senderPubKey": {
+          "type": "string",
+          "format": "byte"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesActionCore": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nonce": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "gasLimit": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "gasPrice": {
+          "type": "string"
+        },
+        "transfer": {
+          "$ref": "#/definitions/iotextypesTransfer"
+        },
+        "execution": {
+          "$ref": "#/definitions/iotextypesExecution"
+        },
+        "startSubChain": {
+          "$ref": "#/definitions/iotextypesStartSubChain",
+          "title": "FedChain"
+        },
+        "stopSubChain": {
+          "$ref": "#/definitions/iotextypesStopSubChain"
+        },
+        "putBlock": {
+          "$ref": "#/definitions/iotextypesPutBlock"
+        },
+        "createDeposit": {
+          "$ref": "#/definitions/iotextypesCreateDeposit"
+        },
+        "settleDeposit": {
+          "$ref": "#/definitions/iotextypesSettleDeposit"
+        },
+        "createPlumChain": {
+          "$ref": "#/definitions/iotextypesCreatePlumChain",
+          "title": "PlumChain"
+        },
+        "terminatePlumChain": {
+          "$ref": "#/definitions/iotextypesTerminatePlumChain"
+        },
+        "plumPutBlock": {
+          "$ref": "#/definitions/iotextypesPlumPutBlock"
+        },
+        "plumCreateDeposit": {
+          "$ref": "#/definitions/iotextypesPlumCreateDeposit"
+        },
+        "plumStartExit": {
+          "$ref": "#/definitions/iotextypesPlumStartExit"
+        },
+        "plumChallengeExit": {
+          "$ref": "#/definitions/iotextypesPlumChallengeExit"
+        },
+        "plumResponseChallengeExit": {
+          "$ref": "#/definitions/iotextypesPlumResponseChallengeExit"
+        },
+        "plumFinalizeExit": {
+          "$ref": "#/definitions/iotextypesPlumFinalizeExit"
+        },
+        "plumSettleDeposit": {
+          "$ref": "#/definitions/iotextypesPlumSettleDeposit"
+        },
+        "plumTransfer": {
+          "$ref": "#/definitions/iotextypesPlumTransfer"
+        },
+        "depositToRewardingFund": {
+          "$ref": "#/definitions/iotextypesDepositToRewardingFund",
+          "title": "Rewarding protocol actions"
+        },
+        "claimFromRewardingFund": {
+          "$ref": "#/definitions/iotextypesClaimFromRewardingFund"
+        },
+        "grantReward": {
+          "$ref": "#/definitions/iotextypesGrantReward"
+        },
+        "putPollResult": {
+          "$ref": "#/definitions/iotextypesPutPollResult"
+        }
+      }
+    },
+    "iotextypesBlock": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/iotextypesBlockHeader"
+        },
+        "body": {
+          "$ref": "#/definitions/iotextypesBlockBody"
+        },
+        "footer": {
+          "$ref": "#/definitions/iotextypesBlockFooter"
+        }
+      },
+      "title": "block consists of header followed by transactions\nhash of current block can be computed from header hence not stored"
+    },
+    "iotextypesBlockBody": {
+      "type": "object",
+      "properties": {
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesAction"
+          }
+        }
+      },
+      "title": "body of a block"
+    },
+    "iotextypesBlockFooter": {
+      "type": "object",
+      "properties": {
+        "endorsements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesEndorsement"
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "footer of a block"
+    },
+    "iotextypesBlockHeader": {
+      "type": "object",
+      "properties": {
+        "core": {
+          "$ref": "#/definitions/iotextypesBlockHeaderCore"
+        },
+        "producerPubkey": {
+          "type": "string",
+          "format": "byte"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte"
+        }
+      },
+      "title": "header of a block"
+    },
+    "iotextypesBlockHeaderCore": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "prevBlockHash": {
+          "type": "string",
+          "format": "byte"
+        },
+        "txRoot": {
+          "type": "string",
+          "format": "byte"
+        },
+        "deltaStateDigest": {
+          "type": "string",
+          "format": "byte"
+        },
+        "receiptRoot": {
+          "type": "string",
+          "format": "byte"
+        },
+        "logsBloom": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesBlockMeta": {
+      "type": "object",
+      "properties": {
+        "hash": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "numActions": {
+          "type": "string",
+          "format": "int64"
+        },
+        "producerAddress": {
+          "type": "string"
+        },
+        "transferAmount": {
+          "type": "string"
+        },
+        "txRoot": {
+          "type": "string"
+        },
+        "receiptRoot": {
+          "type": "string"
+        },
+        "deltaStateDigest": {
+          "type": "string"
+        },
+        "logsBloom": {
+          "type": "string"
+        }
+      },
+      "title": "Block Metadata"
+    },
+    "iotextypesCandidate": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "string",
+          "format": "byte"
+        },
+        "pubKey": {
+          "type": "string",
+          "format": "byte"
+        },
+        "rewardAddress": {
+          "type": "string"
+        }
+      },
+      "title": "Candidates and list of candidates"
+    },
+    "iotextypesCandidateList": {
+      "type": "object",
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesCandidate"
+          }
+        }
+      }
+    },
+    "iotextypesChainMeta": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "numActions": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tps": {
+          "type": "string",
+          "format": "int64"
+        },
+        "epoch": {
+          "$ref": "#/definitions/iotextypesEpochData"
+        },
+        "tpsFloat": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "title": "Blockchain Metadata"
+    },
+    "iotextypesClaimFromRewardingFund": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesCreateDeposit": {
+      "type": "object",
+      "properties": {
+        "chainID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "recipient": {
+          "type": "string"
+        }
+      }
+    },
+    "iotextypesCreatePlumChain": {
+      "type": "object",
+      "title": "plum main chain APIs"
+    },
+    "iotextypesDepositToRewardingFund": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesEndorsement": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endorser": {
+          "type": "string",
+          "format": "byte"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesEpochData": {
+      "type": "object",
+      "properties": {
+        "num": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "gravityChainStartHeight": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesExecution": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "contract": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesGrantReward": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/iotextypesRewardType"
+        },
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesLog": {
+      "type": "object",
+      "properties": {
+        "contractAddress": {
+          "type": "string"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "byte"
+          }
+        },
+        "data": {
+          "type": "string",
+          "format": "byte"
+        },
+        "blkHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "actHash": {
+          "type": "string",
+          "format": "byte"
+        },
+        "index": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "iotextypesMerkleRoot": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "iotextypesPlumChallengeExit": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "coinID": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "challengeTransfer": {
+          "type": "string",
+          "format": "byte"
+        },
+        "challengeTransferBlockProof": {
+          "type": "string",
+          "format": "byte"
+        },
+        "challengeTransferBlockHeight": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesPlumCreateDeposit": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "recipient": {
+          "type": "string"
+        }
+      }
+    },
+    "iotextypesPlumFinalizeExit": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "coinID": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesPlumPutBlock": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "roots": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      }
+    },
+    "iotextypesPlumResponseChallengeExit": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "coinID": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "challengeTransfer": {
+          "type": "string",
+          "format": "byte"
+        },
+        "responseTransfer": {
+          "type": "string",
+          "format": "byte"
+        },
+        "responseTransferBlockProof": {
+          "type": "string",
+          "format": "byte"
+        },
+        "previousTransferBlockHeight": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesPlumSettleDeposit": {
+      "type": "object",
+      "properties": {
+        "coinID": {
+          "type": "string",
+          "format": "uint64"
+        }
+      },
+      "title": "plum sub chain APIs"
+    },
+    "iotextypesPlumStartExit": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "previousTransfer": {
+          "type": "string",
+          "format": "byte"
+        },
+        "previousTransferBlockProof": {
+          "type": "string",
+          "format": "byte"
+        },
+        "previousTransferBlockHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "exitTransfer": {
+          "type": "string",
+          "format": "byte"
+        },
+        "exitTransferBlockProof": {
+          "type": "string",
+          "format": "byte"
+        },
+        "exitTransferBlockHeight": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesPlumTransfer": {
+      "type": "object",
+      "properties": {
+        "coinID": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "denomination": {
+          "type": "string",
+          "format": "byte"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "recipient": {
+          "type": "string"
+        }
+      }
+    },
+    "iotextypesPutBlock": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        },
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesMerkleRoot"
+          }
+        }
+      }
+    },
+    "iotextypesPutPollResult": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "candidates": {
+          "$ref": "#/definitions/iotextypesCandidateList"
+        }
+      }
+    },
+    "iotextypesReceipt": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "blkHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "actHash": {
+          "type": "string",
+          "format": "byte"
+        },
+        "gasConsumed": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "contractAddress": {
+          "type": "string"
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iotextypesLog"
+          }
+        }
+      }
+    },
+    "iotextypesRewardType": {
+      "type": "string",
+      "enum": [
+        "BlockReward",
+        "EpochReward"
+      ],
+      "default": "BlockReward"
+    },
+    "iotextypesServerMeta": {
+      "type": "object",
+      "properties": {
+        "packageVersion": {
+          "type": "string"
+        },
+        "packageCommitID": {
+          "type": "string"
+        },
+        "gitStatus": {
+          "type": "string"
+        },
+        "goVersion": {
+          "type": "string"
+        },
+        "buildTime": {
+          "type": "string"
+        }
+      },
+      "title": "Server Metadata"
+    },
+    "iotextypesSettleDeposit": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "recipient": {
+          "type": "string"
+        },
+        "index": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesStartSubChain": {
+      "type": "object",
+      "properties": {
+        "chainID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "TODO: chainID chould be assigned by system and returned via a receipt"
+        },
+        "securityDeposit": {
+          "type": "string"
+        },
+        "operationDeposit": {
+          "type": "string"
+        },
+        "startHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "parentHeightOffset": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "iotextypesStopSubChain": {
+      "type": "object",
+      "properties": {
+        "chainID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stopHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "subChainAddress": {
+          "type": "string"
+        }
+      }
+    },
+    "iotextypesTerminatePlumChain": {
+      "type": "object",
+      "properties": {
+        "subChainAddress": {
+          "type": "string"
+        }
+      }
+    },
+    "iotextypesTransfer": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "title": "used by state-based model"
+        },
+        "recipient": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeStreamError": {
+      "type": "object",
+      "properties": {
+        "grpc_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "http_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "http_status": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "x-stream-definitions": {
+    "iotexapiStreamBlocksResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/iotexapiStreamBlocksResponse"
+        },
+        "error": {
+          "$ref": "#/definitions/runtimeStreamError"
+        }
+      },
+      "title": "Stream result of iotexapiStreamBlocksResponse"
+    },
+    "iotexapiStreamLogsResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/iotexapiStreamLogsResponse"
+        },
+        "error": {
+          "$ref": "#/definitions/runtimeStreamError"
+        }
+      },
+      "title": "Stream result of iotexapiStreamLogsResponse"
+    }
+  }
+}
