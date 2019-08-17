@@ -34,6 +34,9 @@ service APIService {
       additional_bindings {
 				get: "/v1/getActions/byIndex/{byIndex.start}/{byIndex.count}"
 			}
+	  additional_bindings {
+				get: "/v1/getActions/byIndex2"
+			}
     };
   }
 
