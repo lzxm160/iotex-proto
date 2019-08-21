@@ -20,7 +20,7 @@ service APIService {
   // get the address detail of an address
   rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {
     option (google.api.http) = {
-      get: "/v1/getAccount/{address}"
+      get: "/v1/getAccount"
     };
   }
 
