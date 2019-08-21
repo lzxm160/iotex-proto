@@ -78,9 +78,6 @@ service APIService {
 
   // TODO: read contract
   rpc ReadContract(ReadContractRequest) returns (ReadContractResponse) {
-//    option (google.api.http) = {
-//        get: "/v1/readContract/{execution}/{callerAddress}"
-//    };
     option (google.api.http) = {
       post: "/v1/readContract"
       body: "*"
@@ -96,9 +93,6 @@ service APIService {
 
   // estimate gas for action, to be deprecated
   rpc EstimateGasForAction(EstimateGasForActionRequest) returns (EstimateGasForActionResponse) {
-//    option (google.api.http) = {
-//        get: "/v1/estimateGasForAction/{action}"
-//    };
     option (google.api.http) = {
       post: "/v1/estimateGasForAction"
       body: "*"
