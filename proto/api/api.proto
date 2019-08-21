@@ -96,8 +96,12 @@ service APIService {
 
   // estimate gas for action, to be deprecated
   rpc EstimateGasForAction(EstimateGasForActionRequest) returns (EstimateGasForActionResponse) {
+//    option (google.api.http) = {
+//        get: "/v1/estimateGasForAction/{action}"
+//    };
     option (google.api.http) = {
-        get: "/v1/estimateGasForAction/{action}"
+      post: "/v1/estimateGasForAction"
+      body: "*"
     };
 }
 
