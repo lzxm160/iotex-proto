@@ -72,7 +72,7 @@ service APIService {
   // get receipt by action Hash
   rpc GetReceiptByAction(GetReceiptByActionRequest) returns (GetReceiptByActionResponse) {
     option (google.api.http) = {
-        get: "/v1/getReceiptByAction/{actionHash}"
+        get: "/v1/getReceiptByAction"
     };
 }
 
