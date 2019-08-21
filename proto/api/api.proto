@@ -116,14 +116,14 @@ service APIService {
   // read state from blockchain
   rpc ReadState(ReadStateRequest) returns (ReadStateResponse) {
     option (google.api.http) = {
-        get: "/v1/readState/{protocolID}/{methodName}/{arguments}"
+        get: "/v1/readState"
     };
 }
 
   // get epoch metadata
   rpc GetEpochMeta(GetEpochMetaRequest) returns (GetEpochMetaResponse) {
     option (google.api.http) = {
-        get: "/v1/getEpochMeta/{epochNumber}"
+        get: "/v1/getEpochMeta"
     };
 }
 
