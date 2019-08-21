@@ -130,7 +130,7 @@ service APIService {
   // get raw blocks data
   rpc GetRawBlocks(GetRawBlocksRequest) returns (GetRawBlocksResponse) {
     option (google.api.http) = {
-        get: "/v1/getRawBlocks/{startHeight}/{count}/{withReceipts}"
+        get: "/v1/getRawBlocks"
     };
 }
 
