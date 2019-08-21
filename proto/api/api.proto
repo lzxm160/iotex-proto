@@ -145,7 +145,7 @@ service APIService {
   // GetVotes get a single address' votes
   rpc GetVotes(GetVotesRequest) returns (GetVotesResponse) {
     option (google.api.http) = {
-        get: "/v1/getVotes/{votee}/{height}/{offset}/{limit}"
+        get: "/v1/getVotes"
     };
 }
 
