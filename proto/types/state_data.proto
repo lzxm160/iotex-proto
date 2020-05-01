@@ -52,10 +52,6 @@ message CandidateListV2 {
 	repeated CandidateV2 candidates = 1;
 }
 
-message VoteBucketsCount {
-  uint64 count            = 1;
-}
-
-message CandidatesCount {
+message Count {
   uint64 count            = 1;
 }

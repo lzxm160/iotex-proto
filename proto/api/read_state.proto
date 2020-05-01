@@ -53,10 +53,7 @@ message ReadStakingDataRequest {
 		string candName = 1;
 	}
 
-	message CandidatesCount {
-	}
-
-	message VoteBucketsCount {
+	message TotalCount {
 	}
 
 	oneof request {
@@ -65,7 +62,6 @@ message ReadStakingDataRequest {
 		VoteBucketsByCandidate bucketsByCandidate = 3;
 		Candidates candidates = 4;
 		CandidateByName candidateByName = 5;
-		CandidatesCount candidatesCount = 6;
-		VoteBucketsCount bucketsCount = 7;
+		TotalCount count = 6;
 	}
 }
